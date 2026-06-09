@@ -6,9 +6,9 @@ services:
     container_name: postgres_db
     restart: always
     environment:
-      POSTGRES_DB: gyan-jyoti-lms
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: shinyraptor69
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -23,7 +23,15 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+
+      SPRING_SECURITY_USER_NAME: ${SPRING_SECURITY_USER}
+      SPRING_SECURITY_USER_PASSWORD: ${SPRING_SECURITY_PASSWORD}
+
+      APP_SECURITYKEY: ${APP_SECURITY_KEY}
+      APP_ACCESSKEYEXPIRY: ${APP_ACCESS_KEY_EXPIRY}
 
 volumes:
   pgdata:
